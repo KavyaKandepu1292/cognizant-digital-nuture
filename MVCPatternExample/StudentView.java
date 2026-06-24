@@ -1,0 +1,17 @@
+// VIEW — only displays data, never touches logic
+public class StudentView {
+
+    public void displayStudentDetails(String name, int id, String grade) {
+        
+        System.out.println("       Student Details          ");
+        
+        System.out.println("  ID    : " + id);
+        System.out.println("  Name  : " + name);
+        System.out.println("  Grade : " + grade);
+        
+    }
+
+    public void displayMessage(String message) {
+        System.out.println(message);
+    }
+}
