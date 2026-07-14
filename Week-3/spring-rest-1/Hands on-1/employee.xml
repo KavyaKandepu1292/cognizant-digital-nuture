@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- Departments -->
+    <bean id="dept1" class="com.yourpackage.model.Department">
+        <property name="id" value="1"/>
+        <property name="name" value="Engineering"/>
+    </bean>
+
+    <bean id="dept2" class="com.yourpackage.model.Department">
+        <property name="id" value="2"/>
+        <property name="name" value="HR"/>
+    </bean>
+
+    <!-- Shared skills -->
+    <util:list id="skillSet1">
+        <value>Java</value>
+        <value>Spring</value>
+    </util:list>
+
+    <util:list id="skillSet2">
+        <value>Angular</value>
+        <value>Java</value>
+    </util:list>
+
+    <!-- Employees -->
+    <bean id="emp1" class="com.yourpackage.model.Employee">
+        <property name="id" value="101"/>
+        <property name="name" value="John Doe"/>
+        <property name="salary" value="55000"/>
+        <property name="department" ref="dept1"/>
+        <property name="skills" ref="skillSet1"/>
+    </bean>
+
+    <bean id="emp2" class="com.yourpackage.model.Employee">
+        <property name="id" value="102"/>
+        <property name="name" value="Jane Smith"/>
+        <property name="salary" value="62000"/>
+        <property name="department" ref="dept2"/>
+        <property name="skills" ref="skillSet2"/>
+    </bean>
+
+    <bean id="emp3" class="com.yourpackage.model.Employee">
+        <property name="id" value="103"/>
+        <property name="name" value="Mike Brown"/>
+        <property name="salary" value="48000"/>
+        <property name="department" ref="dept1"/>
+        <property name="skills" ref="skillSet1"/>
+    </bean>
+
+    <bean id="emp4" class="com.yourpackage.model.Employee">
+        <property name="id" value="104"/>
+        <property name="name" value="Emily Davis"/>
+        <property name="salary" value="71000"/>
+        <property name="department" ref="dept2"/>
+        <property name="skills" ref="skillSet2"/>
+    </bean>
+
+    <util:list id="employeeList">
+        <ref bean="emp1"/>
+        <ref bean="emp2"/>
+        <ref bean="emp3"/>
+        <ref bean="emp4"/>
+    </util:list>
+
+</beans>
