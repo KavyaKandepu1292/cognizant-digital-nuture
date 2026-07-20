@@ -1,0 +1,9 @@
+# Config served to inventory-service via config-server
+inventory-service:
+  default-reorder-threshold: 10
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

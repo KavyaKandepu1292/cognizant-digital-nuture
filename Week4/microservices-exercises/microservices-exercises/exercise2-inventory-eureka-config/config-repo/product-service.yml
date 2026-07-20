@@ -1,0 +1,9 @@
+# Config served to product-service via config-server
+product-service:
+  low-stock-threshold: 10
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

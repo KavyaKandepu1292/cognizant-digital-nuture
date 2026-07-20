@@ -1,0 +1,39 @@
+server:
+  port: 8095
+
+spring:
+  application:
+    name: payment-service
+
+payment:
+  # deliberately unreachable, to simulate a slow/broken third-party payment API
+  third-party-url: http://10.255.255.1:9999/charge
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,circuitbreakers,circuitbreakerevents,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  timelimiter:
+    instances:
+      paymentService:
+        timeout-duration: 3s
+        cancel-running-future: true
+  circuitbreaker:
+    instances:
+      paymentService:
+        register-health-indicator: true
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        slow-call-rate-threshold: 50
+        slow-call-duration-threshold: 3s
+        permitted-number-of-calls-in-half-open-state: 3
+        wait-duration-in-open-state: 10s
+        automatic-transition-from-open-to-half-open-enabled: true
