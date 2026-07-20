@@ -1,0 +1,42 @@
+server:
+  port: 9082
+
+spring:
+  application:
+    name: gateway-circuitbreaker-service
+  cloud:
+    gateway:
+      routes:
+        - id: backend_service_route
+          uri: http://10.255.255.1:9999   # deliberately unreachable, to demo the breaker tripping
+          predicates:
+            - Path=/protected/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: backendServiceBreaker
+                fallbackUri: forward:/fallback/protected
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,circuitbreakers,circuitbreakerevents
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      backendServiceBreaker:
+        register-health-indicator: true
+        sliding-window-size: 20
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 60
+        wait-duration-in-open-state: 15s
+        permitted-number-of-calls-in-half-open-state: 4
+  timelimiter:
+    instances:
+      backendServiceBreaker:
+        timeout-duration: 2s
